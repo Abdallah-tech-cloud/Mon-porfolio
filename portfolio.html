@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mon Portfolio — Passion · Code · Monde</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Barlow+Condensed:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:#05050e;color:#dde0f0;font-family:'Barlow Condensed',sans-serif;min-height:100vh;overflow-x:hidden}
+:root{
+  --bg:#05050e;--surface:#0d0d1c;--card:#111225;--border:#1c1c38;
+  --orange:#ff6535;--cyan:#00d4ff;--gold:#ffc400;--text:#dde0f0;--muted:#5c5c7a;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 6px #28c840}50%{box-shadow:0 0 16px #28c84060}}
+.grid-bg{
+  position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,212,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(0,212,255,.035) 1px,transparent 1px);
+  background-size:48px 48px;
+}
+.fade-in{animation:fadeInUp .5s ease forwards}
+nav{
+  position:sticky;top:0;z-index:100;background:rgba(5,5,14,.96);
+  backdrop-filter:blur(12px);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;
+}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;color:var(--cyan);letter-spacing:.22em}
+.nav-links{display:flex;gap:.2rem}
+.nav-btn{
+  background:none;border:none;cursor:pointer;color:var(--muted);font-family:'Barlow Condensed',sans-serif;
+  font-size:.88rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;
+  border-bottom:2px solid transparent;transition:all .2s;
+}
+.nav-btn:hover{color:var(--cyan)}
+.nav-btn.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+.section{display:none;padding:3.5rem 2rem 2rem;max-width:1100px;margin:0 auto;min-height:70vh}
+.section.visible{display:block}
+.section-header{text-align:center;margin-bottom:3.5rem}
+.section-icon{font-size:2.2rem;margin-bottom:.5rem}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);letter-spacing:.1em;margin:0}
+.section-sub{color:var(--muted);font-size:1rem;letter-spacing:.1em;margin-top:.45rem}
+.section-line{width:60px;height:3px;margin:1rem auto 0;border-radius:2px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:1.5rem}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:1rem}
+.full{grid-column:1/-1}
+.card{background:var(--card);border-radius:12px;padding:1.75rem;border:1px solid var(--border)}
+.card-title{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.12em;margin-bottom:1.3rem}
+.passion-card{
+  background:var(--surface);border:1px solid var(--border);border-radius:14px;
+  padding:2rem;cursor:pointer;transition:all .3s ease;
+}
+.passion-card:hover{transform:translateY(-5px);background:var(--card)}
+.passion-card.orange:hover{border-color:var(--orange);box-shadow:0 8px 30px rgba(255,101,53,.15)}
+.passion-card.cyan:hover{border-color:var(--cyan);box-shadow:0 8px 30px rgba(0,212,255,.12)}
+.passion-card.gold:hover{border-color:var(--gold);box-shadow:0 8px 30px rgba(255,196,0,.12)}
+.passion-emoji{font-size:2.4rem;margin-bottom:.9rem}
+.passion-title{font-family:'Bebas Neue',sans-serif;font-size:2.1rem;letter-spacing:.1em;margin-bottom:.65rem}
+.passion-desc{color:var(--muted);font-size:.95rem;line-height:1.65;margin-bottom:1.35rem}
+.stat-row{display:flex;gap:.75rem}
+.stat-box{flex:1;background:var(--bg);border-radius:8px;padding:.65rem .75rem;border:1px solid var(--border)}
+.stat-label{font-size:.62rem;color:var(--muted);font-family:'JetBrains Mono',monospace;letter-spacing:.06em;margin-bottom:.2rem}
+.stat-val{font-size:.88rem;color:var(--text);font-weight:600}
+.explore-hint{margin-top:1.3rem;font-size:.78rem;font-family:'JetBrains Mono',monospace;opacity:0;transition:opacity .3s}
+.passion-card:hover .explore-hint{opacity:1}
+.row-item{display:flex;justify-content:space-between;align-items:center;padding:.65rem 0;border-bottom:1px solid var(--border)}
+.row-item:last-child{border:none}
+.row-label{color:var(--muted);font-size:.9rem}
+.row-val{color:var(--text);font-weight:600}
+.player-row{display:flex;align-items:center;gap:.9rem;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.player-row:last-child{border:none}
+.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;flex-shrink:0}
+.badge{font-size:.7rem;font-family:'JetBrains Mono',monospace;padding:.2rem .55rem;border-radius:4px}
+.terminal{background:#0b100b;border-radius:12px;overflow:hidden;border:1px solid rgba(0,212,255,.35)}
+.term-bar{background:#111;padding:.72rem 1rem;display:flex;gap:6px;align-items:center}
+.term-dot{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.term-title{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.72rem;margin-left:.5rem}
+.term-body{padding:1.4rem;font-family:'JetBrains Mono',monospace;font-size:.82rem;line-height:2.1}
+.skillbar-wrap{margin-bottom:.95rem}
+.skillbar-header{display:flex;justify-content:space-between;margin-bottom:5px}
+.skillbar-track{height:6px;background:var(--border);border-radius:3px;overflow:hidden}
+.skillbar-fill{height:100%;border-radius:3px}
+.tags-wrap{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{background:rgba(255,196,0,.1);border:1px solid rgba(255,196,0,.3);color:var(--gold);border-radius:20px;padding:.28rem .78rem;font-size:.78rem;letter-spacing:.05em}
+.mini-card{background:var(--bg);border-radius:8px;padding:1.25rem;border:1px solid var(--border)}
+.mini-icon{font-size:1.4rem;margin-bottom:.45rem}
+.mini-title{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.1em;margin-bottom:.4rem}
+.mini-desc{color:var(--muted);font-size:.82rem;line-height:1.55}
+.zone-row{display:flex;align-items:center;gap:.9rem;padding:.7rem 0;border-bottom:1px solid var(--border)}
+.zone-row:last-child{border:none}
+.zone-flag{font-size:1.45rem}
+.zone-name{font-family:'Bebas Neue',sans-serif;letter-spacing:.12em}
+.zone-focus{font-size:.78rem;color:var(--muted)}
+blockquote{font-size:1.15rem;font-style:italic;line-height:1.75;border-left:4px solid var(--orange);padding-left:1.5rem;color:var(--text)}
+.admin-box{background:var(--card);border-radius:18px;padding:3rem;border:1px solid var(--border);text-align:center;max-width:440px;margin:4rem auto}
+.admin-label{font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.25em;color:var(--cyan);margin-bottom:.8rem}
+.admin-title{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--text);letter-spacing:.1em;margin-bottom:.4rem}
+.admin-sub{color:var(--muted);font-size:.95rem;margin-bottom:2rem;line-height:1.5}
+.admin-input{
+  width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;
+  padding:.82rem 1rem;color:var(--text);font-family:'JetBrains Mono',monospace;font-size:.9rem;
+  outline:none;margin-bottom:.75rem;transition:border-color .2s;
+}
+.admin-input:focus{border-color:var(--cyan)}
+.admin-btn{
+  width:100%;background:var(--cyan);color:#000;border:none;border-radius:8px;
+  padding:.88rem;font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:.2em;cursor:pointer;transition:opacity .2s;
+}
+.admin-btn:hover{opacity:.85}
+.admin-err{color:#ff5555;font-family:'JetBrains Mono',monospace;font-size:.78rem;margin-bottom:.75rem;min-height:1.2em}
+.dashboard{max-width:700px;margin:0 auto}
+.views-card{background:var(--card);border-radius:14px;padding:2.5rem;border:1px solid rgba(0,212,255,.4);text-align:center;margin-bottom:1.5rem}
+.views-label{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.75rem;letter-spacing:.22em;margin-bottom:.8rem}
+.views-count{font-family:'Bebas Neue',sans-serif;font-size:6.5rem;color:var(--cyan);line-height:1;letter-spacing:.05em}
+.views-sub{color:var(--muted);margin-top:.5rem;font-size:.95rem}
+.reset-btn{margin-top:1.5rem;background:transparent;border:1px solid rgba(255,85,85,.6);border-radius:6px;color:#ff6666;padding:.45rem 1.1rem;font-family:'JetBrains Mono',monospace;font-size:.72rem;cursor:pointer;letter-spacing:.1em;transition:all .2s}
+.reset-btn:hover{background:rgba(255,85,85,.1)}
+.status-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.status-card{background:var(--card);border-radius:10px;padding:1.4rem;border:1px solid var(--border)}
+.status-title{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.7rem;letter-spacing:.2em;margin-bottom:1rem}
+.status-row{display:flex;justify-content:space-between;padding:.45rem 0;border-bottom:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:.78rem}
+.status-row:last-child{border:none}
+.green{color:#28c840}
+footer{text-align:center;padding:2rem 1rem;border-top:1px solid var(--border);background:var(--surface)}
+.view-pill{display:inline-flex;align-items:center;gap:.65rem;background:var(--card);border:1px solid var(--border);border-radius:50px;padding:.45rem 1.4rem}
+.view-dot{width:8px;height:8px;border-radius:50%;background:#28c840;animation:pulse 2s infinite;flex-shrink:0}
+.view-label{font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted);letter-spacing:.08em}
+.view-num{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--cyan);letter-spacing:.12em}
+.footer-sub{margin-top:.8rem;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.18em}
+.hero-tag{font-family:'JetBrains Mono',monospace;color:var(--cyan);font-size:.82rem;letter-spacing:.3em;margin-bottom:1rem;opacity:.75}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,9vw,7rem);line-height:1;letter-spacing:.04em;margin-bottom:1.25rem}
+.hero-sub{color:var(--muted);font-size:1.1rem;max-width:500px;margin:0 auto;letter-spacing:.06em;line-height:1.6}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+@media(max-width:600px){nav{padding:0 1rem}.nav-logo{font-size:1.1rem}.nav-btn{font-size:.75rem;padding:.25rem .4rem}.section{padding:2.5rem 1rem}.status-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+
+<nav>
+  <span class="nav-logo">MON.PORTFOLIO</span>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="show('home')">Accueil</button>
+    <button class="nav-btn" onclick="show('basketball')">🏀 Basket</button>
+    <button class="nav-btn" onclick="show('coding')">💻 Coding</button>
+    <button class="nav-btn" onclick="show('geopolitics')">🌍 Géopo</button>
+    <button class="nav-btn" onclick="show('admin')" style="opacity:.45">⚙️</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div class="section visible fade-in" id="home">
+  <div style="text-align:center;margin-bottom:4.5rem">
+    <div class="hero-tag">&lt; BIENVENUE SUR MON ESPACE /&gt;</div>
+    <h1 class="hero-title">
+      <span style="color:var(--orange)">PASSION</span>
+      <span style="color:var(--muted)"> · </span>
+      <span style="color:var(--cyan)">CODE</span>
+      <span style="color:var(--muted)"> · </span>
+      <span style="color:var(--gold)">MONDE</span>
+    </h1>
+    <p class="hero-sub">Basketteur dans l'âme. Développeur dans le code. Stratège dans la pensée.</p>
+  </div>
+  <div class="grid2">
+    <div class="passion-card orange" onclick="show('basketball')">
+      <div class="passion-emoji">🏀</div>
+      <div class="passion-title" style="color:var(--orange)">BASKETBALL</div>
+      <p class="passion-desc">Le basket c'est mon langage. Terrain, stratégie, équipe — une véritable philosophie de vie.</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-label">MON POSTE</div><div class="stat-val">Point Guard</div></div>
+        <div class="stat-box"><div class="stat-label">STYLE</div><div class="stat-val">Full Court</div></div>
+      </div>
+      <div class="explore-hint" style="color:var(--orange)">EXPLORER →</div>
+    </div>
+    <div class="passion-card cyan" onclick="show('coding')">
+      <div class="passion-emoji" style="font-family:'JetBrains Mono',monospace;font-size:1.7rem">{ }</div>
+      <div class="passion-title" style="color:var(--cyan)">CODING</div>
+      <p class="passion-desc">De l'idée au code. Construire des solutions qui ont un impact réel sur le monde digital.</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-label">LANGAGE FAV.</div><div class="stat-val">Python / JS</div></div>
+        <div class="stat-box"><div class="stat-label">SPÉCIALITÉ</div><div class="stat-val">Web & Data</div></div>
+      </div>
+      <div class="explore-hint" style="color:var(--cyan)">EXPLORER →</div>
+    </div>
+    <div class="passion-card gold" onclick="show('geopolitics')">
+      <div class="passion-emoji">🌍</div>
+      <div class="passion-title" style="color:var(--gold)">GÉOPOLITIQUE</div>
+      <p class="passion-desc">Comprendre les forces qui façonnent notre monde pour mieux anticiper les défis de demain.</p>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-label">FOCUS</div><div class="stat-val">Afrique & Asie</div></div>
+        <div class="stat-box"><div class="stat-label">THÈME</div><div class="stat-val">Puissance</div></div>
+      </div>
+      <div class="explore-hint" style="color:var(--gold)">EXPLORER →</div>
+    </div>
+  </div>
+</div>
+
+<!-- BASKETBALL -->
+<div class="section" id="basketball">
+  <div class="section-header">
+    <div class="section-icon">🏀</div>
+    <h1 class="section-title" style="color:var(--orange)">BASKETBALL</h1>
+    <p class="section-sub">Le jeu. La passion. Le terrain.</p>
+    <div class="section-line" style="background:var(--orange)"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title" style="color:var(--orange)">MON JEU</div>
+      <div class="row-item"><span class="row-label">Poste principal</span><span class="row-val">Point Guard / Meneur</span></div>
+      <div class="row-item"><span class="row-label">Style de jeu</span><span class="row-val">Rapide & Créatif</span></div>
+      <div class="row-item"><span class="row-label">Qualité #1</span><span class="row-val">Vision du jeu</span></div>
+      <div class="row-item"><span class="row-label">Shot préféré</span><span class="row-val">Mid-range pull-up</span></div>
+      <div class="row-item"><span class="row-label">Équipe favorite</span><span class="row-val">Golden State Warriors</span></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--orange)">MES IDOLES NBA</div>
+      <div class="player-row">
+        <div class="avatar" style="background:rgba(255,101,53,.15);border:2px solid var(--orange);color:var(--orange)">SC</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:.95rem">Stephen Curry</div><div style="color:var(--muted);font-size:.73rem;font-family:'JetBrains Mono',monospace">Golden State Warriors</div></div>
+        <span class="badge" style="background:rgba(255,101,53,.12);color:var(--orange)">3-Point King</span>
+      </div>
+      <div class="player-row">
+        <div class="avatar" style="background:rgba(255,101,53,.15);border:2px solid var(--orange);color:var(--orange)">LJ</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:.95rem">LeBron James</div><div style="color:var(--muted);font-size:.73rem;font-family:'JetBrains Mono',monospace">Los Angeles Lakers</div></div>
+        <span class="badge" style="background:rgba(255,101,53,.12);color:var(--orange)">4× Champ</span>
+      </div>
+      <div class="player-row">
+        <div class="avatar" style="background:rgba(255,101,53,.15);border:2px solid var(--orange);color:var(--orange)">GA</div>
+        <div style="flex:1"><div style="font-weight:600;font-size:.95rem">Giannis Antetokounmpo</div><div style="color:var(--muted);font-size:.73rem;font-family:'JetBrains Mono',monospace">Milwaukee Bucks</div></div>
+        <span class="badge" style="background:rgba(255,101,53,.12);color:var(--orange)">Greek Freak</span>
+      </div>
+    </div>
+    <div class="full" style="background:linear-gradient(135deg,var(--card) 0%,#180800 100%);border:1px solid rgba(255,101,53,.25);border-radius:12px;padding:2rem">
+      <blockquote>"Le basket m'a appris que le talent individuel ne suffit pas — c'est la vision collective, la discipline et la résilience qui font la différence. Sur le terrain comme dans la vie."</blockquote>
+    </div>
+  </div>
+</div>
+
+<!-- CODING -->
+<div class="section" id="coding">
+  <div class="section-header">
+    <div class="section-icon" style="font-family:'JetBrains Mono',monospace;font-size:1.8rem;color:var(--cyan)">{ }</div>
+    <h1 class="section-title" style="color:var(--cyan)">CODING</h1>
+    <p class="section-sub">Du concept au déploiement.</p>
+    <div class="section-line" style="background:var(--cyan)"></div>
+  </div>
+  <div class="grid2">
+    <div class="terminal">
+      <div class="term-bar">
+        <div class="term-dot" style="background:#ff5f57"></div>
+        <div class="term-dot" style="background:#ffbd2e"></div>
+        <div class="term-dot" style="background:#28c840"></div>
+        <span class="term-title">~/portfolio — bash</span>
+      </div>
+      <div class="term-body">
+        <div><span style="color:var(--cyan)">$</span> <span style="color:#90ee90">whoami</span></div>
+        <div style="color:var(--text);margin-left:1rem">dev_passionné_et_curieux</div>
+        <div><span style="color:var(--cyan)">$</span> <span style="color:#90ee90">cat skills.json</span></div>
+        <div style="color:#ffa07a">{</div>
+        <div style="margin-left:1.5rem"><span style="color:var(--muted)">"languages":</span> <span style="color:#98d982">["Python","JS","C"]</span>,</div>
+        <div style="margin-left:1.5rem"><span style="color:var(--muted)">"tools":</span> <span style="color:#98d982">["Git","Linux","VSCode"]</span>,</div>
+        <div style="margin-left:1.5rem"><span style="color:var(--muted)">"passion":</span> <span style="color:var(--gold)">"construire l'avenir"</span></div>
+        <div style="color:#ffa07a">}</div>
+        <div><span style="color:var(--cyan)">$</span> <span style="animation:blink 1s infinite;display:inline-block;color:var(--cyan)">▋</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--cyan)">STACK TECH</div>
+      <div class="skillbar-wrap">
+        <div class="skillbar-header"><span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text)">Python</span><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)">85%</span></div>
+        <div class="skillbar-track"><div class="skillbar-fill" style="width:85%;background:#3776AB"></div></div>
+      </div>
+      <div class="skillbar-wrap">
+        <div class="skillbar-header"><span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text)">JavaScript</span><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)">75%</span></div>
+        <div class="skillbar-track"><div class="skillbar-fill" style="width:75%;background:#F7DF1E"></div></div>
+      </div>
+      <div class="skillbar-wrap">
+        <div class="skillbar-header"><span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text)">HTML / CSS</span><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)">80%</span></div>
+        <div class="skillbar-track"><div class="skillbar-fill" style="width:80%;background:#E34F26"></div></div>
+      </div>
+      <div class="skillbar-wrap">
+        <div class="skillbar-header"><span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text)">SQL</span><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)">65%</span></div>
+        <div class="skillbar-track"><div class="skillbar-fill" style="width:65%;background:#00ADD8"></div></div>
+      </div>
+      <div class="skillbar-wrap" style="margin-bottom:0">
+        <div class="skillbar-header"><span style="font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--text)">C Language</span><span style="font-family:'JetBrains Mono',monospace;font-size:.74rem;color:var(--muted)">60%</span></div>
+        <div class="skillbar-track"><div class="skillbar-fill" style="width:60%;background:var(--cyan)"></div></div>
+      </div>
+    </div>
+    <div class="full" style="background:linear-gradient(135deg,var(--card) 0%,#08091a 100%);border:1px solid rgba(0,212,255,.2);border-radius:12px;padding:2rem">
+      <div class="card-title" style="color:var(--cyan)">MA PHILOSOPHIE DU CODE</div>
+      <div class="grid3">
+        <div class="mini-card"><div class="mini-icon">🎯</div><div class="mini-title" style="color:var(--cyan)">CLEAN CODE</div><div class="mini-desc">Un code lisible est un code respectueux — pour les autres et pour ton futur toi.</div></div>
+        <div class="mini-card"><div class="mini-icon">🔄</div><div class="mini-title" style="color:var(--cyan)">ITERATE FAST</div><div class="mini-desc">Construire, tester, apprendre. L'erreur est le meilleur professeur.</div></div>
+        <div class="mini-card"><div class="mini-icon">🌐</div><div class="mini-title" style="color:var(--cyan)">IMPACT RÉEL</div><div class="mini-desc">Coder pour résoudre de vrais problèmes, pas juste pour impressionner.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- GEOPOLITICS -->
+<div class="section" id="geopolitics">
+  <div class="section-header">
+    <div class="section-icon">🌍</div>
+    <h1 class="section-title" style="color:var(--gold)">GÉOPOLITIQUE</h1>
+    <p class="section-sub">Comprendre les forces qui façonnent notre monde.</p>
+    <div class="section-line" style="background:var(--gold)"></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title" style="color:var(--gold)">ZONES D'ANALYSE</div>
+      <div class="zone-row"><span class="zone-flag">🌍</span><div><div class="zone-name" style="color:var(--gold)">AFRIQUE</div><div class="zone-focus">Souveraineté & Développement</div></div></div>
+      <div class="zone-row"><span class="zone-flag">🌏</span><div><div class="zone-name" style="color:var(--gold)">ASIE-PACIFIQUE</div><div class="zone-focus">Rivalité USA-Chine</div></div></div>
+      <div class="zone-row"><span class="zone-flag">🛢️</span><div><div class="zone-name" style="color:var(--gold)">MOYEN-ORIENT</div><div class="zone-focus">Énergie & Conflits</div></div></div>
+      <div class="zone-row"><span class="zone-flag">🇪🇺</span><div><div class="zone-name" style="color:var(--gold)">EUROPE</div><div class="zone-focus">OTAN & Identité géopolitique</div></div></div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="color:var(--gold)">THÈMES CLÉS</div>
+      <div class="tags-wrap">
+        <span class="tag">Multilatéralisme</span><span class="tag">Ressources naturelles</span>
+        <span class="tag">Cyberguerre</span><span class="tag">Pan-Africanisme</span>
+        <span class="tag">Démocratie</span><span class="tag">Soft Power</span>
+        <span class="tag">Sanctions économiques</span><span class="tag">Diaspora africaine</span>
+        <span class="tag">IA & Défense</span><span class="tag">Transition énergétique</span>
+      </div>
+    </div>
+    <div class="full" style="background:linear-gradient(135deg,var(--card) 0%,#100900 100%);border:1px solid rgba(255,196,0,.2);border-radius:12px;padding:2rem">
+      <div class="card-title" style="color:var(--gold)">MA VISION</div>
+      <div class="grid3">
+        <div class="mini-card" style="border-top:3px solid var(--gold)"><div class="mini-title" style="color:var(--gold)">ANALYSER</div><div class="mini-desc">Décrypter les mouvements géopolitiques au-delà des titres médiatiques.</div></div>
+        <div class="mini-card" style="border-top:3px solid var(--gold)"><div class="mini-title" style="color:var(--gold)">CONNECTER</div><div class="mini-desc">Relier économie, histoire et culture pour comprendre les crises actuelles.</div></div>
+        <div class="mini-card" style="border-top:3px solid var(--gold)"><div class="mini-title" style="color:var(--gold)">AGIR</div><div class="mini-desc">La connaissance du monde est un levier pour construire demain.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN -->
+<div class="section" id="admin">
+  <div id="adminLogin">
+    <div class="admin-box">
+      <div class="admin-label">⚙ ACCÈS RESTREINT</div>
+      <div class="admin-title">ZONE ADMIN</div>
+      <p class="admin-sub">Entrez le mot de passe pour accéder au tableau de bord administrateur.</p>
+      <input class="admin-input" id="pwInput" type="password" placeholder="Mot de passe..." onkeydown="if(event.key==='Enter')doLogin()">
+      <div class="admin-err" id="adminErr"></div>
+      <button class="admin-btn" onclick="doLogin()">ACCÉDER →</button>
+    </div>
+  </div>
+  <div id="adminDash" style="display:none">
+    <div class="section-header">
+      <div class="section-icon" style="color:var(--cyan)">⚙️</div>
+      <h1 class="section-title" style="color:var(--cyan)">TABLEAU DE BORD</h1>
+      <p class="section-sub">Vue administrateur</p>
+      <div class="section-line" style="background:var(--cyan)"></div>
+    </div>
+    <div class="dashboard">
+      <div class="views-card">
+        <div class="views-label">TOTAL VUES DE PAGE</div>
+        <div class="views-count" id="dashViews">—</div>
+        <div class="views-sub">visites enregistrées depuis le lancement</div>
+        <button class="reset-btn" onclick="resetViews()">RESET COMPTEUR</button>
+      </div>
+      <div class="status-grid">
+        <div class="status-card">
+          <div class="status-title">STATUT SYSTÈME</div>
+          <div class="status-row"><span style="color:var(--muted)">Site</span><span class="green">● EN LIGNE</span></div>
+          <div class="status-row"><span style="color:var(--muted)">Storage</span><span class="green">● ACTIF</span></div>
+          <div class="status-row"><span style="color:var(--muted)">Compteur</span><span style="color:var(--cyan)" id="dashStatusCount">—</span></div>
+        </div>
+        <div class="status-card">
+          <div class="status-title">SECTIONS ACTIVES</div>
+          <div class="status-row"><span style="color:var(--text)">🏀 Basketball</span><span class="green">ACTIF</span></div>
+          <div class="status-row"><span style="color:var(--text)">💻 Coding</span><span class="green">ACTIF</span></div>
+          <div class="status-row"><span style="color:var(--text)">🌍 Géopolitique</span><span class="green">ACTIF</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="view-pill">
+    <div class="view-dot"></div>
+    <span class="view-label">PAGE VIEWS :</span>
+    <span class="view-num" id="footerViews">…</span>
+  </div>
+  <div class="footer-sub">CODED WITH ❤️ — DAKAR · 2026</div>
+</footer>
+
+<script>
+const PASS = "admin2026";
+const KEY = "portfolio_views_v1";
+let totalViews = 0;
+
+const SECTIONS = ['home','basketball','coding','geopolitics','admin'];
+
+function show(id) {
+  SECTIONS.forEach(s => {
+    const el = document.getElementById(s);
+    if (el) { el.classList.remove('visible','fade-in'); }
+  });
+  const target = document.getElementById(id);
+  if (target) {
+    target.classList.add('visible');
+    void target.offsetWidth;
+    target.classList.add('fade-in');
+  }
+  document.querySelectorAll('.nav-btn').forEach((b, i) => {
+    b.classList.toggle('active', SECTIONS[i] === id);
+  });
+}
+
+function updateDisplay(n) {
+  const s = n.toLocaleString();
+  document.getElementById('footerViews').textContent = s;
+  const dash = document.getElementById('dashViews');
+  if (dash) dash.textContent = s;
+  const sc = document.getElementById('dashStatusCount');
+  if (sc) sc.textContent = s + ' vues';
+}
+
+// View counter using localStorage (works in any browser)
+(function initViews() {
+  try {
+    const stored = localStorage.getItem(KEY);
+    const prev = stored ? (parseInt(stored) || 0) : 0;
+    const next = prev + 1;
+    localStorage.setItem(KEY, String(next));
+    totalViews = next;
+    updateDisplay(next);
+  } catch(e) {
+    totalViews = 1;
+    document.getElementById('footerViews').textContent = '1';
+  }
+})();
+
+function doLogin() {
+  const val = document.getElementById('pwInput').value;
+  const err = document.getElementById('adminErr');
+  if (val === PASS) {
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminDash').style.display = 'block';
+    updateDisplay(totalViews);
+    err.textContent = '';
+  } else {
+    err.textContent = '❌ Mot de passe incorrect. Réessayez.';
+    document.getElementById('pwInput').value = '';
+    document.getElementById('pwInput').focus();
+  }
+}
+
+function resetViews() {
+  if (!confirm('Remettre le compteur à zéro ?')) return;
+  try {
+    localStorage.setItem(KEY, '0');
+    totalViews = 0;
+    updateDisplay(0);
+  } catch(e) {
+    alert('Erreur lors du reset.');
+  }
+}
+</script>
+</body>
+</html>
